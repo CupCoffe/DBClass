@@ -1,68 +1,71 @@
 <?php
 
-class Database{
+class DataBase{
 
     public $connection;
-    protected $datab;
+    protected $database;
 
 
-    // connect to db
+    // Connect to DataBase
     public function __construct($host, $username, $password, $dbname){
-        $this->isConn = TRUE;
-        try {
-            $this->datab = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $username, $password);
-            $this->datab->query("SET NAMES 'utf8'");
-            $this->datab->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->datab->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }catch (PDOException $e){
-            throw new Exception($e->getMessage());
+        $this->connection = TRUE;
+        try {                       //Sets parameters of database and error handling
+            $this->database = new PDO("mysql:host={$host}; dbname={$dbname}; charset=utf8", $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
+            $this->database->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);     //Sets the sampling mode is the default and returns an array indexed by column names of the result
+        }catch (PDOException $e){       //exception handling
+            throw new Exception($e->getMessage());  //message of error
         }
     }
 
-    // disconnect from db
+    // disconnect from database
     public function Disconnect(){
-        $this->datab = NULL;
-        $this->isConn = FALSE;
+        $this->database = NULL;
+        $this->connection = FALSE;
 
     }
-    // get row
-    public function getRow($query, $params = []){
+
+    // SELECT
+    public function selectRow($query, $parameters = []){
         try{
-            $stmt = $this->datab->prepare($query);
-            $stmt->execute($params);
-            return $stmt->fetch();
+            $stmt = $this->database->prepare($query);   //Prepares the query to perform and returns the associated object
+            $stmt->execute($parameters);        //Starts a query to perform
+            return $stmt->fetch();  //Select one row
         } catch (PDOException $e){
             throw new Exception($e->getMessage());
         }
     }
-    // get rows
-    public function getRows($query, $params = []){
+
+    // SELECT All
+    public function getRows($query, $parameters = []){
         try{
-            $stmt = $this->datab->prepare($query);
-            $stmt->execute($params);
-            return $stmt->fetchAll();
+            $stmt = $this->database->prepare($query);
+            $stmt->execute($parameters);
+            return $stmt->fetchAll();   //Select all rows
         } catch (PDOException $e){
             throw new Exception($e->getMessage());
         }
     }
-    // insert row
-    public function insertRow($query, $params = []){
+
+    // INSERT
+    public function insertRow($query, $parameters = []){
         try{
-            $stmt = $this->datab->prepare($query);
-            $stmt->execute($params);
+            $stmt = $this->database->prepare($query);
+            $stmt->execute($parameters);
             return TRUE;
         } catch (PDOException $e){
             throw new Exception($e->getMessage());
         }
 
     }
-    // update row
-    public function updateRow($query, $params = []){
-        $this->insertRow($query, $params);
+
+    // UPDATE
+    public function updateRow($query, $parameters = []){
+        $this->insertRow($query, $parameters);
     }
-// delete row
-    public function deleteRow($query, $params = []){
-        $this->insertRow($query, $params);
+
+    // DELETE
+    public function deleteRow($query, $parameters = []){
+        $this->insertRow($query, $parameters);
     }
 }
 
