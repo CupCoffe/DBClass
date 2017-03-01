@@ -13,7 +13,7 @@ class DataBase{
             $this->database = new PDO("mysql:host={$host}; dbname={$dbname}; charset=utf8", $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
             $this->database->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);     //Sets the sampling mode is the default and returns an array indexed by column names of the result
         }catch (PDOException $e){       //exception handling
-            throw new Exception($e->getMessage());  //message of error
+            throw new Exception($e->getMessage());  //error message
         }
     }
 
