@@ -2,7 +2,7 @@
 
 class Database{
 
-    public $isConn;
+    public $connection;
     protected $datab;
 
 
