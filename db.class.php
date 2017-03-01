@@ -36,7 +36,7 @@ class DataBase{
     }
 
     // SELECT All
-    public function getRows($query, $parameters = []){
+    public function selectRows($query, $parameters = []){
         try{
             $stmt = $this->database->prepare($query);
             $stmt->execute($parameters);
