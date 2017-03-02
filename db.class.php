@@ -17,11 +17,11 @@ class DataBase{
         }
     }
 
-    // disconnect from database
-    public function Disconnect(){
-        $this->database = NULL;
-        $this->connection = FALSE;
-
+    // Implement __destruct() method.
+    public function __destruct()
+    {
+        $this->database;       // Null database
+        $this->connection;      //Close connection
     }
 
     // SELECT
