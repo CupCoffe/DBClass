@@ -17,7 +17,7 @@ class DataBase{
         }
     }
 
-    // Implement __destruct() method.
+    // Implement __destruct() method
     public function __destruct()
     {
         $this->database;       // Null database
